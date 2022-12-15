@@ -9,6 +9,7 @@ import { defaultValues, IFormLogin } from './types'
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from "yup";
+import { isDisabled } from "@testing-library/user-event/dist/utils";
 
 const schema = yup.object({
   email: yup.string().email('E-mail invalido').required('Campo obrigatorio'),
@@ -17,13 +18,18 @@ const schema = yup.object({
 
 const Login = () => {
 
-
   const { control, formState:{ errors, isValid } } = useForm<IFormLogin>({
     resolver: yupResolver(schema),
     mode: 'onBlur',
     reValidateMode: 'onChange',
     defaultValues,
   })
+
+
+
+
+    
+
   return (
     <Container>
       <LoginContainer>
@@ -39,7 +45,7 @@ const Login = () => {
             placeholder="Senha" control={ control } 
           />
           <Spacing />
-          <Button title="Entrar" />
+          { isValid === true? <Button title="Entrar" id="button" /> : null}
         </Column>
       </LoginContainer>
     </Container>
